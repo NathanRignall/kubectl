@@ -6,13 +6,15 @@ version="$1"
 config="$2"
 command="$3"
 
+architectures=( ["X64"]="amd64" ["ARM64"]="arm64" ["ARM"]="arm")
+
 if [ "$version" = "latest" ]; then
   version=$(curl -Ls https://dl.k8s.io/release/stable.txt)
 fi
 
 echo "using kubectl@$version"
 
-curl -sLO "https://dl.k8s.io/release/$version/bin/linux/amd64/kubectl" -o kubectl
+curl -sLO "https://dl.k8s.io/release/$version/bin/linux/${animals[$RUNNER_ARCH]}/kubectl" -o kubectl
 chmod +x kubectl
 mv kubectl /usr/local/bin
 
